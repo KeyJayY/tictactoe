@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 global.games = {};
 
 const app = express();
+app.set("view engine", "ejs");
 const server = http.createServer(app);
 
 startWebSocketServer(server);

@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import __dirname from "../helpers/dirname.js";
 
 export const createGame = (req, res) => {
-	res.cookie("gameID", 5 || uuidv4(), { maxAge: 3600000 });
+	res.cookie("gameID", uuidv4(), { maxAge: 3600000 });
 	res.redirect("/game");
 };
 
@@ -18,5 +18,5 @@ export const sendGamePage = (req, res) => {
 };
 
 export const sendStartPage = (req, res) => {
-	res.sendFile(__dirname + "/public/template.html");
+	res.render("mainPage.ejs", { games: global.games });
 };

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script async src="js/main.js"></script>
+</head>
+<body>
+    <h1>TicTacToe</h1>
+    <main>
+        <header>game rooms</header>
+        <div id="games-container">
+        <% for(let gameID in games) { %>
+            <div class="game-box">
+                <span>nick: thomas</span>
+                <button class="join-btn" data-id="<%=gameID%>">join</button>
+            </div>
+        <% } %>
+        </div>
+        <button id="new-room-button">create new room</button>
+    </main>
+    <div class="bg inactive"></div>
+</body>
+</html>
