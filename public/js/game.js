@@ -28,9 +28,12 @@ const colorWinningLine = (set) => {
 	});
 };
 
-const gameID = parseCookies().gameID;
+const cookies = parseCookies();
+const gameID = cookies.gameID;
+const username = cookies.username;
+console.log(username);
 
-ws = new WebSocket(`ws://localhost:3000?gameID=${gameID}`);
+ws = new WebSocket(`ws://localhost:3000?gameID=${gameID}&username=${username}`);
 
 ws.addEventListener("message", (mes) => {
 	const message = JSON.parse(mes.data);

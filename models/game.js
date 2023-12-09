@@ -1,14 +1,15 @@
 import checkIfWin from "../helpers/checkIfWin.js";
 
 export default class Game {
-	constructor(ws) {
+	constructor(ws, username) {
+		this.username = username;
 		this.player1 = { socket: ws, symbol: "x" };
 		this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 		ws.player = 1;
 	}
 	joinAndStart(ws) {
 		this.player2 = { socket: ws, symbol: "o" };
-		this.turn = 1;
+		this.turn = Math.floor(Math.random() * 2) + 1;
 		ws.player = 2;
 	}
 	move(tile) {

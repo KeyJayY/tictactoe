@@ -1,7 +1,7 @@
 const newGameForm = document.createElement("div");
 newGameForm.classList.add("new-game-form");
 newGameForm.innerHTML =
-	'<form action="/game/create"><input type="text" name="nickname" id="nickname" placeholder="enter your nick name"><button>create</button></form>';
+	'<form action="/game/create"><input type="text" name="username" id="nickname" placeholder="enter your nick name"><button>create</button></form>';
 
 document.querySelector(".bg").addEventListener("click", (e) => {
 	document.querySelector("body").removeChild(newGameForm);
