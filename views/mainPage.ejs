@@ -14,7 +14,7 @@
         <div id="games-container">
         <% for(let gameID in games) { %>
             <div class="game-box">
-                <span>nick: <%=games[gameID].username%></span>
+                <span>room name: <%=games[gameID].roomname%></span>
                 <button class="join-btn" data-id="<%=gameID%>">join</button>
             </div>
         <% } %>

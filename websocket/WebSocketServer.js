@@ -6,16 +6,14 @@ const startWebSocketServer = (server) => {
 	const wss = new WebSocketServer({ server });
 	wss.on("connection", (ws, req) => {
 		const gameID = url.parse(req.url, true).query.gameID;
-		console.log(url.parse(req.url, true).query);
 		if (gameID) {
 			if (global.games[gameID] && !global.games[gameID].player2)
 				global.games[gameID].joinAndStart(ws);
 			else
 				global.games[gameID] = new Game(
 					ws,
-					url.parse(req.url, true).query.username
+					url.parse(req.url, true).query.roomname
 				);
-			// add handling situtation when two players join same game (where already is one player) at the same time
 		}
 
 		ws.on("message", (message) => {

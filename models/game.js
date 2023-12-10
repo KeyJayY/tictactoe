@@ -1,8 +1,8 @@
 import checkIfWin from "../helpers/checkIfWin.js";
 
 export default class Game {
-	constructor(ws, username) {
-		this.username = username;
+	constructor(ws, roomname) {
+		this.roomname = roomname;
 		this.player1 = { socket: ws, symbol: "x" };
 		this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 		ws.player = 1;
@@ -14,15 +14,17 @@ export default class Game {
 	}
 	move(tile) {
 		this.board[tile - 1] = this[`player${this.turn}`].symbol;
-		const message = JSON.stringify({
+		const message = {
 			action: "changeTiles",
 			data: {
 				tile: tile,
 				symbol: this[`player${this.turn}`].symbol,
+				turn: this.turn == 1 ? "Opponent's" : "Your",
 			},
-		});
-		this.player1.socket.send(message);
-		this.player2.socket.send(message);
+		};
+		this.player1.socket.send(JSON.stringify(message));
+		message.data.turn = this.turn == 1 ? "Your" : "Oppenent's";
+		this.player2.socket.send(JSON.stringify(message));
 		this.turn = this.turn == 1 ? 2 : 1;
 		const winningSet = checkIfWin(this.board);
 		if (winningSet) {

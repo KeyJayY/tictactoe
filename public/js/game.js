@@ -30,10 +30,9 @@ const colorWinningLine = (set) => {
 
 const cookies = parseCookies();
 const gameID = cookies.gameID;
-const username = cookies.username;
-console.log(username);
+const roomname = cookies.roomname;
 
-ws = new WebSocket(`ws://localhost:3000?gameID=${gameID}&username=${username}`);
+ws = new WebSocket(`ws://localhost:3000?gameID=${gameID}&roomname=${roomname}`);
 
 ws.addEventListener("message", (mes) => {
 	const message = JSON.parse(mes.data);
@@ -42,6 +41,7 @@ ws.addEventListener("message", (mes) => {
 		document
 			.querySelector(`#tile${message.data.tile}`)
 			.appendChild(message.data.symbol == "x" ? createX() : createO());
+		document.querySelector("h1").innerHTML = message.data.turn + " Turn";
 	} else if (message.action == "finishGame") {
 		document.querySelector("h1").innerText = `You ${message.result}!`;
 		colorWinningLine(message.winningSet);

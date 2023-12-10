@@ -3,7 +3,7 @@ import __dirname from "../helpers/dirname.js";
 
 export const createGame = (req, res) => {
 	res.cookie("gameID", uuidv4(), { maxAge: 3600000 });
-	res.cookie("username", req.query.username, { maxAge: 3600000 });
+	res.cookie("roomname", req.query.roomname, { maxAge: 3600000 });
 	res.redirect("/game");
 };
 
