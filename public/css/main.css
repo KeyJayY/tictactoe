@@ -36,7 +36,8 @@ span {
 	width: 6em;
 	height: 3em;
 }
-.new-game-form {
+.new-game-form,
+.join-game-form {
 	position: fixed;
 	padding: 2em;
 	background-color: green;
@@ -59,5 +60,8 @@ form {
 	z-index: 1;
 }
 .inactive {
+	display: none;
+}
+:not(#isLocked:checked) + #password {
 	display: none;
 }

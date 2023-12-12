@@ -15,12 +15,23 @@
         <% for(let gameID in games) { %>
             <div class="game-box">
                 <span>room name: <%=games[gameID].roomname%></span>
+                <% if(games[gameID].password) { %>
+                    <span>locked</span>
+                <% } %>
                 <button class="join-btn" data-id="<%=gameID%>">join</button>
             </div>
         <% } %>
         </div>
         <button id="new-room-button">create new room</button>
     </main>
+    <!-- <div class="new-game-form">
+        <form action="/game/create">
+            <input type="text" name="roomname" id="nickname" placeholder="enter your room name">
+            <label for="checkbox">Locked room:</label><input type="checkbox" name="isLocked" id="isLocked">
+            <input type="password" name="password" id="password">
+            <button>create</button>
+        </form>
+    </div> -->
     <div class="bg inactive"></div>
 </body>
 </html>

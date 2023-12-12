@@ -12,7 +12,8 @@ const startWebSocketServer = (server) => {
 			else
 				global.games[gameID] = new Game(
 					ws,
-					url.parse(req.url, true).query.roomname
+					url.parse(req.url, true).query.roomname,
+					url.parse(req.url, true).query.password
 				);
 		}
 

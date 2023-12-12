@@ -31,8 +31,11 @@ const colorWinningLine = (set) => {
 const cookies = parseCookies();
 const gameID = cookies.gameID;
 const roomname = cookies.roomname;
+const password = cookies.password;
 
-ws = new WebSocket(`ws://localhost:3000?gameID=${gameID}&roomname=${roomname}`);
+ws = new WebSocket(
+	`ws://localhost:3000?gameID=${gameID}&roomname=${roomname}&password=${password}`
+);
 
 ws.addEventListener("message", (mes) => {
 	const message = JSON.parse(mes.data);

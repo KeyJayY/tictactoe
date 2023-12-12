@@ -1,10 +1,11 @@
 import checkIfWin from "../helpers/checkIfWin.js";
 
 export default class Game {
-	constructor(ws, roomname) {
+	constructor(ws, roomname, password) {
 		this.roomname = roomname;
 		this.player1 = { socket: ws, symbol: "x" };
 		this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+		if (password != "undefined") this.password = password;
 		ws.player = 1;
 	}
 	joinAndStart(ws) {
