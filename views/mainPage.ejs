@@ -18,7 +18,7 @@
                 <% if(games[gameID].password) { %>
                     <span>locked</span>
                 <% } %>
-                <button class="join-btn" data-id="<%=gameID%>">join</button>
+                <button class="join-btn <% if(games[gameID].password) { %>locked<% } %>" data-id="<%=gameID%>">join</button>
             </div>
         <% } %>
         </div>

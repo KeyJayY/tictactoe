@@ -31,7 +31,7 @@ const colorWinningLine = (set) => {
 const cookies = parseCookies();
 const gameID = cookies.gameID;
 const roomname = cookies.roomname;
-const password = cookies.password;
+const password = cookies.password || "";
 
 ws = new WebSocket(
 	`ws://localhost:3000?gameID=${gameID}&roomname=${roomname}&password=${password}`
@@ -39,7 +39,6 @@ ws = new WebSocket(
 
 ws.addEventListener("message", (mes) => {
 	const message = JSON.parse(mes.data);
-	console.log(message);
 	if (message.action == "changeTiles") {
 		document
 			.querySelector(`#tile${message.data.tile}`)
@@ -48,6 +47,9 @@ ws.addEventListener("message", (mes) => {
 	} else if (message.action == "finishGame") {
 		document.querySelector("h1").innerText = `You ${message.result}!`;
 		colorWinningLine(message.winningSet);
+	} else if (message.action == "abortGame") {
+		document.querySelector("h1").innerText = "Your opponent left the game";
+		ws.close();
 	}
 });
 
@@ -61,4 +63,15 @@ document.querySelector("#board").addEventListener("click", (e) => {
 			})
 		);
 	}
+});
+
+window.addEventListener("beforeunload", () => {
+	for (i in cookies)
+		document.cookie = i + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	ws.send(
+		JSON.stringify({
+			gameID: gameID,
+			action: "abortGame",
+		})
+	);
 });
