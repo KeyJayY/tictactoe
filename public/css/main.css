@@ -1,19 +1,67 @@
 * {
 	box-sizing: border-box;
 }
+html {
+	min-height: 100vh;
+}
 body {
-	background-color: gray;
+	background-color: rgb(8, 32, 50);
+	color: white;
+	font-family: "Lato", sans-serif;
+	min-height: 100vh;
+	margin: 0;
+	padding: 1em 1em;
 }
 h1 {
+	color: rgb(255, 76, 41);
+	font-size: 3rem;
+	font-family: "Play", sans-serif;
+	line-height: 3rem;
 	text-align: center;
 }
+button {
+	background-color: rgb(255, 76, 41);
+	color: rgb(51, 71, 86);
+	display: block;
+}
+span {
+	display: block;
+	font-size: 1.25em;
+	padding-top: 0.2em;
+}
+input[type="text"],
+input[type="password"] {
+	display: block;
+	margin: 0.5em 0;
+}
 #games-container {
+	border-top: dotted white 2px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	margin-top: 0.35em;
+	min-height: 72vh;
+}
+#new-room-button {
+	border: none;
+	border-radius: 0.5em;
+	display: block;
+	height: 3.5em;
+	margin-left: auto;
+}
+.create-btn,
+.join {
+	margin-top: 1em;
+	margin-left: auto;
+}
+.main-header {
+	height: 12vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .game-box {
-	background-color: red;
+	background-color: rgba(51, 71, 86, 0.5);
 	border: 1em;
 	border-radius: 1em;
 	height: 9em;
@@ -22,11 +70,7 @@ h1 {
 	position: relative;
 	width: 12em;
 }
-span {
-	display: block;
-	font-size: 1.25em;
-	padding-top: 0.2em;
-}
+
 .join-btn {
 	bottom: 1em;
 	border-radius: 0.5em;
@@ -40,16 +84,13 @@ span {
 .join-game-form {
 	position: fixed;
 	padding: 2em;
-	background-color: green;
+	background-color: rgb(44, 57, 75);
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 2;
 }
-form {
-	display: flex;
-	flex-direction: column;
-}
+
 .bg {
 	position: fixed;
 	top: 0;

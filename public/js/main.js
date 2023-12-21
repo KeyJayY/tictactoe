@@ -1,7 +1,7 @@
 const newGameForm = document.createElement("div");
 newGameForm.classList.add("new-game-form");
 newGameForm.innerHTML =
-	'<form action="/game/create"><input type="text" name="roomname" id="nickname" placeholder="enter your room name"><label for="checkbox">Locked room:</label><input type="checkbox" name="isLocked" id="isLocked"><input type="password" name="password" id="password"><button>create</button></form>';
+	'<form action="/game/create"><input type="text" name="roomname" id="nickname" placeholder="enter your room name"><label for="checkbox">Locked room:</label><input type="checkbox" name="isLocked" id="isLocked"><input type="password" name="password" id="password"><button class="create-btn">create</button></form>';
 
 const joinLockedRoomForm = document.createElement("div");
 joinLockedRoomForm.classList.add("join-game-form");
