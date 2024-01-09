@@ -1,5 +1,5 @@
 # TicTacToe online game
-http://tictactoe.keyjay.pl
+https://tictactoe.keyjay.pl
 ## General Info
 online tictactoe game website
 ## Technologies
