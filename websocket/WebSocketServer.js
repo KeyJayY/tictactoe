@@ -1,41 +1,29 @@
 import url from "url";
 import { WebSocketServer } from "ws";
-import Game from "../models/game.js";
+import handleConnect from "../helpers/handleConnectTictactoe.js";
 
-const startWebSocketServer = (server) => {
-	const wss = new WebSocketServer({ server });
-	wss.on("connection", (ws, req) => {
-		const gameID = url.parse(req.url, true).query.gameID;
-		if (gameID) {
-			if (global.games[gameID] && !global.games[gameID].player2)
-				global.games[gameID].joinAndStart(ws);
-			else
-				global.games[gameID] = new Game(
-					ws,
-					url.parse(req.url, true).query.roomname,
-					url.parse(req.url, true).query.password
-				);
-		}
+class WsServers {
+	constructor(server) {
+		this.tictactoeServer = new WebSocketServer({ noServer: true });
+		this.menuServer = new WebSocketServer({ noServer: true });
 
-		ws.on("message", (message) => {
-			console.log(global.games);
-			const data = JSON.parse(message);
-			if (data.action == "makeMove") {
-				if (global.games[data.gameID].turn == ws.player) {
-					global.games[data.gameID].move(data.move.tile);
-				}
-			} else if (data.action == "abortGame") {
-				global.games[data.gameID].player1?.socket.send(
-					JSON.stringify({ data: "koniec" })
-				);
-				global.games[data.gameID].player2?.socket.send(
-					JSON.stringify({ action: "abortGame" })
-				);
-				delete global.games[data.gameID];
+		server.on("upgrade", (req, socket, head) => {
+			const pathname = url.parse(req.url).pathname;
+			if (pathname === "/tictactoe") {
+				handleConnect(req, socket, head, this.tictactoeServer);
+			} else if (pathname === "/menu") {
+				this.menuServer.handleUpgrade(req, socket, head, (ws) => {
+					ws.on;
+				});
+			} else {
+				socket.destroy();
 			}
 		});
-		ws.on("close", (event) => {});
-	});
-};
+	}
+	static getInstance(server) {
+		if (!WsServers.instance) WsServers.instance = new WsServers(server);
+		return WsServers.instance;
+	}
+}
 
-export default startWebSocketServer;
+export default WsServers;

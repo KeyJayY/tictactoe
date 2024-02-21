@@ -1,18 +1,29 @@
 import { v4 as uuidv4 } from "uuid";
 import __dirname from "../helpers/dirname.js";
+import Game from "../models/game.js";
+import WsServers from "../websocket/WebSocketServer.js";
 
 export const createGame = (req, res) => {
-	res.cookie("gameID", uuidv4(), { maxAge: 360000 });
-	res.cookie("roomname", req.query.roomname, { maxAge: 360000 });
-	if (req.query.isLocked)
-		res.cookie("password", req.query.password, { maxAge: 360000 });
+	const gameID = uuidv4();
+	res.cookie("gameID", gameID, { maxAge: 360000 });
+	global.games[gameID] = new Game(req.query.roomname, req.query.password);
+
+	const gamesToSend = Object.entries(global.games).reduce((acc, [key, val]) => {
+		acc[key] = {};
+		acc[key].roomname = val.roomname;
+		acc[key].isLocked = val.password != undefined;
+		return acc;
+	}, {});
+	WsServers.getInstance().menuServer.clients.forEach((client) => {
+		client.send(JSON.stringify({ action: "updateGames", games: gamesToSend }));
+	});
 	res.redirect("/game");
 };
 
 export const joinGame = (req, res) => {
 	if (!global.games[req.query.gameID] || global.games[req.query.gameID].player2)
-		res.redirect("/").end();
-	if (
+		res.redirect("/");
+	else if (
 		global.games[req.query.gameID].password == "" ||
 		global.games[req.query.gameID].password == req.query.password
 	) {

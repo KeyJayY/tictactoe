@@ -1,5 +1,5 @@
 import express from "express";
-import startWebSocketServer from "./websocket/WebSocketServer.js";
+import WsServers from "./websocket/WebSocketServer.js";
 import http from "http";
 import gameRouter from "./routes/gameRouter.js";
 import homeRouter from "./routes/homeRouter.js";
@@ -8,12 +8,11 @@ import "dotenv/config";
 const PORT = process.env.PORT || 3000;
 
 global.games = {};
-
 const app = express();
 app.set("view engine", "ejs");
 const server = http.createServer(app);
 
-startWebSocketServer(server);
+const websocketServers = WsServers.getInstance(server);
 
 app.use("/game", gameRouter);
 app.use("/", homeRouter);

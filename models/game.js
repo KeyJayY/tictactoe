@@ -1,11 +1,13 @@
 import checkIfWin from "../helpers/checkIfWin.js";
 
 export default class Game {
-	constructor(ws, roomname, password) {
+	constructor(roomname, password) {
 		this.roomname = roomname;
-		this.player1 = { socket: ws, symbol: "x" };
 		this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 		if (password != "undefined") this.password = password;
+	}
+	joinHost(ws) {
+		this.player1 = { socket: ws, symbol: "x" };
 		ws.player = 1;
 	}
 	joinAndStart(ws) {
@@ -24,26 +26,32 @@ export default class Game {
 			},
 		};
 		this.player1.socket.send(JSON.stringify(message));
+
 		message.data.turn = this.turn == 1 ? "Your" : "Oppenent's";
 		this.player2.socket.send(JSON.stringify(message));
+
 		this.turn = this.turn == 1 ? 2 : 1;
+
 		const winningSet = checkIfWin(this.board);
 		if (winningSet) {
-			this[`player${this.turn == 1 ? 2 : 1}`].socket.send(
-				JSON.stringify({
-					action: "finishGame",
-					result: "won",
-					winningSet: winningSet,
-				})
-			);
-			this[`player${this.turn}`].socket.send(
-				JSON.stringify({
-					action: "finishGame",
-					result: "loose",
-					winningSet: winningSet,
-				})
-			);
-			this.turn = 0;
+			this.finishGame(winningSet);
 		}
+	}
+	finishGame(winningSet) {
+		this[`player${this.turn == 1 ? 2 : 1}`].socket.send(
+			JSON.stringify({
+				action: "finishGame",
+				result: "won",
+				winningSet: winningSet,
+			})
+		);
+		this[`player${this.turn}`].socket.send(
+			JSON.stringify({
+				action: "finishGame",
+				result: "loose",
+				winningSet: winningSet,
+			})
+		);
+		this.turn = 0;
 	}
 }
