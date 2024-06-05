@@ -13,7 +13,9 @@ const handleConnect = (req, socket, head, tictactoeServer) => {
 			}
 		}
 		ws.on("message", handleMessage(ws));
-		ws.on("close", (event) => {});
+		ws.on("close", (event) => {
+			if (gameID) delete global.games[gameID];
+		});
 	});
 };
 
