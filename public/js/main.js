@@ -1,7 +1,7 @@
 const gameBox = document.createElement("div");
 gameBox.classList.add("game-box");
 
-ws = new WebSocket(`ws://${window.location.hostname}:3000/menu`);
+ws = new WebSocket(`wss://${window.location.hostname}:3000/menu`);
 
 ws.addEventListener("message", (message) => {
 	const data = JSON.parse(message.data);

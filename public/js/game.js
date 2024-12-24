@@ -34,7 +34,7 @@ const roomname = cookies.roomname;
 const password = cookies.password || "";
 
 ws = new WebSocket(
-	`ws://${window.location.hostname}:3000/tictactoe?gameID=${gameID}`
+	`wss://${window.location.hostname}:3000/tictactoe?gameID=${gameID}`
 );
 
 ws.addEventListener("message", (mes) => {
