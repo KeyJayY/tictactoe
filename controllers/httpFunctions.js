@@ -14,6 +14,11 @@ export const createGame = (req, res) => {
 		acc[key].isLocked = val.password != undefined;
 		return acc;
 	}, {});
+
+	setTimeout(() => {
+		delete global.games[gameID];
+	}, 3600000);
+
 	WsServers.getInstance().menuServer.clients.forEach((client) => {
 		client.send(JSON.stringify({ action: "updateGames", games: gamesToSend }));
 	});

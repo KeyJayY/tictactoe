@@ -4,8 +4,8 @@ import url from "url";
 const handleConnect = (req, socket, head, tictactoeServer) => {
 	tictactoeServer.handleUpgrade(req, socket, head, (ws) => {
 		const gameID = url.parse(req.url, true).query.gameID;
-		if (gameID) {
-			if (global.games[gameID]?.player1) {
+		if (gameID && global.games[gameID]) {
+			if (global.games[gameID].player1) {
 				if (!global.games[gameID].player2)
 					global.games[gameID].joinAndStart(ws);
 			} else {
